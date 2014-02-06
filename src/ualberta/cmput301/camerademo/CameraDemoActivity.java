@@ -1,8 +1,12 @@
 package ualberta.cmput301.camerademo;
 
+import java.io.File;
+import java.net.URI;
+
 import ualberta.cmput301.camerodemo.R;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
@@ -52,9 +56,15 @@ public class CameraDemoActivity extends Activity {
 		// To Do
 		if (requestCode == 0) {
 			if (resultCode == RESULT_OK) {
+				String pathString;
 				Bitmap bm = (Bitmap) data.getExtras().getParcelable("data");
+				bm = Bitmap.createScaledBitmap(bm, imageButton.getHeight(), imageButton.getWidth(), true); // scaled image
+				//Environment environment = new Environment();
+				pathString = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp";
+				//URI picAddress = URI(pathString);
 				imageButton.setImageBitmap(bm);
 				textView.setText("Photo OK");
+				//textView.setText(pathString);
 			}
 			else if (resultCode == RESULT_CANCELED) {
 				textView.setText("Photo Cancelled");
